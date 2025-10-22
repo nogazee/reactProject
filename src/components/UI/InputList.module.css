@@ -1,0 +1,8 @@
+.list {
+  border: 1px solid darkslateblue;
+  border-radius: 10px;
+}
+
+.li {
+  margin: 0.5rem;
+}
