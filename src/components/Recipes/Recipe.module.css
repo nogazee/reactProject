@@ -1,0 +1,26 @@
+.recipe {
+  width: 45%;
+  margin: 1rem;
+}
+
+.header {
+  border-radius: 10px 10px 0 0;
+  background: darkslateblue;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.header h2 {
+  margin: 0;
+  color: white;
+}
+
+.img {
+  display: block;
+  margin: auto;
+  width: 50%;
+}
+
+.content {
+  padding: 1rem;
+}

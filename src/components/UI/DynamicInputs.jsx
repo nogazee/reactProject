@@ -12,7 +12,7 @@ const DynamicInputs = (props) => {
     }
   };
 
-  const removeInputHandler = (index, event) => {
+  const inputBlurHandler = (index, event) => {
     if (
       index !== props.inputValues.length - 1 &&
       event.target.value.trim() === ""
@@ -32,7 +32,7 @@ const DynamicInputs = (props) => {
             type="text"
             value={input}
             onChange={(event) => inputChangeHandler(index, event)}
-            onBlur={(event) => removeInputHandler(index, event)}
+            onBlur={(event) => inputBlurHandler(index, event)}
             placeholder={`${props.type} ${index + 1}`}
           />
         </div>

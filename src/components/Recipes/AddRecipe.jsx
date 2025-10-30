@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 import ErrorModal from "../UI/ErrorModal";
 import DynamicInputs from "../UI/DynamicInputs";
+import RecipeContext from "../../store/recipe-context";
 import classes from "./AddRecipe.module.css";
 
-const AddRecipe = (props) => {
+const AddRecipe = () => {
   const [enteredIngredients, setEnteredIngredients] = useState([""]);
   const [enteredInstructions, setEnteredInstructions] = useState([""]);
   const [enteredName, setEnteredName] = useState("");
   const [selectedImage, setSelectedImage] = useState();
   const [error, setError] = useState();
+
+  const recipeCtx = useContext(RecipeContext);
 
   const addRecipeHandler = (event) => {
     event.preventDefault();
@@ -27,12 +30,13 @@ const AddRecipe = (props) => {
 
       return;
     }
-    props.onAddRecipe(
-      enteredName,
-      enteredIngredients.slice(0, -1),
-      enteredInstructions.slice(0, -1),
-      selectedImage
-    );
+
+    recipeCtx.addRecipe({
+      name: enteredName,
+      ingredients: enteredIngredients.slice(0, -1),
+      instructions: enteredInstructions.slice(0, -1),
+      image: selectedImage
+    });
 
     setEnteredIngredients([""]);
     setEnteredInstructions([""]);
@@ -48,9 +52,15 @@ const AddRecipe = (props) => {
 
   const imageUploadHandler = (event) => {
     const file = event.target.files[0];
-    if (!file.type.startsWith("image/")) {
+    if (file) {
+      if (!file.type.startsWith("image/")) {
         event.target.value = "";
+        setError({
+          title: "Invalid file input",
+          message: "Please select an image file.",
+        });
         return;
+      }
     }
     setSelectedImage(file);
   };
@@ -80,22 +90,18 @@ const AddRecipe = (props) => {
             value={enteredName}
             onChange={nameChangeHandler}
           />
-          <label>
-            Ingredients
-            <DynamicInputs
-              type="Ingredient"
-              inputValues={enteredIngredients}
-              setInputValues={setEnteredIngredients}
-            />
-          </label>
-          <label>
-            Instructions
-            <DynamicInputs
-              type="Instruction"
-              inputValues={enteredInstructions}
-              setInputValues={setEnteredInstructions}
-            />
-          </label>
+          <p>Ingredients</p>
+          <DynamicInputs
+            type="Ingredient"
+            inputValues={enteredIngredients}
+            setInputValues={setEnteredIngredients}
+          />
+          <p>Instructions</p>
+          <DynamicInputs
+            type="Instruction"
+            inputValues={enteredInstructions}
+            setInputValues={setEnteredInstructions}
+          />
           <label htmlFor="image">Image</label>
           <input
             id="image"
@@ -105,10 +111,7 @@ const AddRecipe = (props) => {
           ></input>
           {selectedImage && (
             <div>
-              <img
-                alt="not found"
-                src={URL.createObjectURL(selectedImage)}
-              />
+              <img alt="not found" src={URL.createObjectURL(selectedImage)} />
             </div>
           )}
           <Button type="submit">Add Recipe</Button>
