@@ -13,7 +13,7 @@ const AddRecipe = () => {
   const [selectedImage, setSelectedImage] = useState();
   const [error, setError] = useState();
 
-  const recipeCtx = useContext(RecipeContext);
+  const { addRecipe } = useContext(RecipeContext);
 
   const addRecipeHandler = (event) => {
     event.preventDefault();
@@ -31,11 +31,11 @@ const AddRecipe = () => {
       return;
     }
 
-    recipeCtx.addRecipe({
+    addRecipe({
       name: enteredName,
       ingredients: enteredIngredients.slice(0, -1),
       instructions: enteredInstructions.slice(0, -1),
-      image: selectedImage
+      image: URL.createObjectURL(selectedImage),
     });
 
     setEnteredIngredients([""]);
@@ -111,7 +111,7 @@ const AddRecipe = () => {
           ></input>
           {selectedImage && (
             <div>
-              <img alt="not found" src={URL.createObjectURL(selectedImage)} />
+              <img alt="preview" src={URL.createObjectURL(selectedImage)} />
             </div>
           )}
           <Button type="submit">Add Recipe</Button>

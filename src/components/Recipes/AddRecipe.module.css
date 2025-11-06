@@ -17,7 +17,7 @@
   font-weight: normal;
   display: block;
   width: 100%;
-  border: 1px solid black;
+  border: 1px solid gray;
   border-radius: 10px;
   padding: 0.3rem;
   margin-top: 0.5rem;
@@ -27,6 +27,7 @@
 .input input:focus {
   outline: none;
   border-color: darkslateblue;
+  background-color: aliceblue;
 }
 
 .input img {
@@ -36,8 +37,8 @@
 
 .input input::file-selector-button {
   font: inherit;
-  border: 1px solid darkslateblue;
   border-radius: 10px;
+  border: 1px solid darkslateblue;
   background: darkslateblue;
   color: white;
   padding: 0.25rem 1rem;
@@ -45,8 +46,8 @@
 }
 
 .input input::file-selector-button:hover {
-  background: slateblue;
-  border-color: slateblue;
+  background: rgb(95, 105, 190);
+  border-color: rgb(95, 105, 190);
 }
 
 .header {

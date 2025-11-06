@@ -28,7 +28,7 @@ const DynamicInputs = (props) => {
       {props.inputValues.map((input, index) => (
         <div key={index}>
           <input
-            id={`${props.type}${index + 1}`}
+            id={Math.random().toString()}
             type="text"
             value={input}
             onChange={(event) => inputChangeHandler(index, event)}

@@ -10,8 +10,9 @@
 
 .button:hover,
 .button:active {
-  background: slateblue;
-  border-color: slateblue;
+  background: rgb(95, 105, 190);
+  border-color: rgb(95, 105, 190);
+  transform: scale(1.1);
 }
 
 .button:focus {

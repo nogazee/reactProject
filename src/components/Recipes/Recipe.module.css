@@ -7,7 +7,8 @@
   border-radius: 10px 10px 0 0;
   background: darkslateblue;
   padding: 1rem;
-  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .header h2 {
@@ -15,12 +16,116 @@
   color: white;
 }
 
+.remove-btn {
+  background-image: url("/public/remove-button.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  width: 1.5rem;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  transform: scale(1.1);
+}
+
+.edit-btn {
+  display: block;
+  margin: 1rem auto;
+  display: flex;
+  align-items: center;
+}
+
+.edit-btn::before {
+  content: "";
+  background-image: url("/public/edit-icon.png");
+  background-size: contain;
+  width: 1rem;
+  height: 1rem;
+}
+
 .img {
   display: block;
   margin: auto;
-  width: 50%;
+  object-fit: cover;
+  width: 100%;
+  height: 15vw;
 }
 
 .content {
-  padding: 1rem;
+  margin: 1rem;
+}
+
+.done-btn {
+  display: block;
+  margin: 1rem auto;
+}
+
+.img-select {
+  margin: 0%;
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.img-select input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  opacity: 0;
+}
+
+.img-select p {
+  margin: 0%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.img-edit {
+  filter: brightness(50%);
+}
+
+.error {
+  text-align: center;
+  color: red;
+  padding: 0.5rem;
+  background-color: pink;
+  border: 2px solid red;
+  border-radius: 10px;
+  width: 60%;
+  opacity: 75%;
+  display: block;
+  margin: 0 auto;
+}
+
+.header input {
+  font: inherit;
+  font-weight: normal;
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 0.3rem;
+}
+
+.content input {
+  font: inherit;
+  font-weight: normal;
+  width: 50%;
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 0.3rem;
+  margin-bottom: 0.2rem;
+}
+
+.content input:focus,
+.header input:focus {
+  outline: none;
+  border-color: darkslateblue;
+  background-color: aliceblue;
 }
