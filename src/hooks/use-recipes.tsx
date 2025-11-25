@@ -1,19 +1,28 @@
 import { useReducer, useEffect } from "react";
+import Recipe from "../models/recipeModel";
 
-const defaultRecipesState = [];
+type State = Recipe[];
+type ActionObj = {
+  type: string;
+  payload: string | Recipe;
+};
 
-const recipesReducer = (state, action) => {
+const defaultRecipesState: Recipe[] = [];
+
+const recipesReducer = (state: State, action: ActionObj) => {
   switch (action.type) {
     case "ADD":
       return state.concat({
-        ...action.payload,
-        id: Math.random().toString(),
+        ...(action.payload as Recipe),
+        // id: Math.random().toString()
       });
     case "REMOVE":
       return state.filter((recipe) => recipe.id !== action.payload);
     case "UPDATE":
       return state.map((recipe) =>
-        recipe.id === action.payload.id ? { ...action.payload } : recipe
+        recipe.id === (action.payload as Recipe).id
+          ? { ...(action.payload as Recipe) }
+          : recipe
       );
     default:
       return defaultRecipesState;
@@ -25,7 +34,11 @@ const useRecipes = () => {
     recipesReducer,
     defaultRecipesState,
     () => {
-      return JSON.parse(localStorage.getItem("recipes")) || defaultRecipesState;
+      const storedRecipes = localStorage.getItem("recipes");
+      if (storedRecipes) {
+        return JSON.parse(storedRecipes);
+      }
+      return defaultRecipesState;
     }
   );
 
@@ -33,21 +46,21 @@ const useRecipes = () => {
     localStorage.setItem("recipes", JSON.stringify(recipesState));
   }, [recipesState]);
 
-  const addRecipeHandler = (recipe) => {
+  const addRecipeHandler = (recipe: Recipe) => {
     dispatchRecipesAction({
       type: "ADD",
       payload: recipe,
     });
   };
 
-  const removeRecipeHandler = (id) => {
+  const removeRecipeHandler = (id: string) => {
     dispatchRecipesAction({
       type: "REMOVE",
       payload: id,
     });
   };
 
-  const updateRecipeHandler = (updates) => {
+  const updateRecipeHandler = (updates: Recipe) => {
     dispatchRecipesAction({
       type: "UPDATE",
       payload: updates,

@@ -1,17 +1,18 @@
-import { useContext, useState, Fragment } from "react";
+import React, { useContext, useState, Fragment } from "react";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 import ItemList from "../UI/ItemList";
 import EditRecipe from "./EditRecipe";
 import RecipeContext from "../../store/recipe-context";
 import classes from "./Recipe.module.css";
+import Recipe from "../../models/recipeModel";
 
-const Recipe = (props) => {
+const RecipeItem: React.FC<{ recipe: Recipe }> = (props) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const recipeCtx = useContext(RecipeContext);
 
-  const removeButtonClickHandler = (id) => {
+  const removeButtonClickHandler = (id: string) => {
     recipeCtx.removeRecipe(id);
   };
 
@@ -19,7 +20,7 @@ const Recipe = (props) => {
     setIsEditing(true);
   };
 
-  const updateRecipeHandler = (updates) => {
+  const updateRecipeHandler = (updates: Recipe) => {
     recipeCtx.editRecipe(updates);
     setIsEditing(false);
   };
@@ -42,7 +43,7 @@ const Recipe = (props) => {
           ></img>
           <Button
             className={classes["edit-btn"]}
-            onClick={() => editButtonClickHandler(props.recipe.id)}
+            onClick={() => editButtonClickHandler()}
           >
             Edit
           </Button>
@@ -54,10 +55,15 @@ const Recipe = (props) => {
           </div>
         </Fragment>
       ) : (
-        <EditRecipe {...props} id={props.recipe.id} onDone={updateRecipeHandler} isEditing={isEditing} />
+        <EditRecipe
+          {...props}
+          id={props.recipe.id}
+          onDone={updateRecipeHandler}
+          isEditing={isEditing}
+        />
       )}
     </Card>
   );
 };
 
-export default Recipe;
+export default RecipeItem;

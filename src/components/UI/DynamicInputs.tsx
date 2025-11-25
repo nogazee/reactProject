@@ -1,5 +1,7 @@
-const DynamicInputs = (props) => {
-  const inputChangeHandler = (index, event) => {
+import { ChangeEvent, FocusEvent } from "react";
+
+const DynamicInputs: React.FC<{inputValues: string[], setInputValues: (values: string[]) => void, type: string}> = (props) => {
+  const inputChangeHandler = (index: number, event: ChangeEvent<HTMLInputElement>) => {
     const newValues = [...props.inputValues];
     newValues[index] = event.target.value;
     if (
@@ -12,7 +14,7 @@ const DynamicInputs = (props) => {
     }
   };
 
-  const inputBlurHandler = (index, event) => {
+  const inputBlurHandler = (index: number, event: FocusEvent<HTMLInputElement>) => {
     if (
       index !== props.inputValues.length - 1 &&
       event.target.value.trim() === ""

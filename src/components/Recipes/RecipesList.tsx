@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Recipe from "./Recipe";
+import RecipeItem from "./RecipeItem";
 import classes from "./RecipesList.module.css";
 import RecipeContext from "../../store/recipe-context";
 
@@ -9,7 +9,7 @@ const RecipesList = () => {
   return (
     <div className={classes.container}>
       {recipes.map((recipe, index) => (
-        <Recipe recipe={recipe} key={index} />
+        <RecipeItem recipe={recipe} key={index} />
       ))}
     </div>
   );

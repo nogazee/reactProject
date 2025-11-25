@@ -1,6 +1,6 @@
 import classes from "./ItemList.module.css"
 
-const ItemList = (props) => {
+const ItemList: React.FC<{items: string[]}> = (props) => {
   return (
     <ol className={classes.list}>
       {props.items.map((item, index) => (

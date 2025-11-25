@@ -1,9 +1,15 @@
-import { Fragment, useState } from "react";
+import React, { ChangeEvent, Fragment, useState } from "react";
 import Button from "../UI/Button";
 import DynamicInputs from "../UI/DynamicInputs";
 import classes from "./Recipe.module.css";
+import Recipe from "../../models/recipeModel";
 
-const EditRecipe = (props) => {
+const EditRecipe: React.FC<{
+  recipe: Recipe;
+  onDone: (recipe: Recipe) => void;
+  id: string;
+  isEditing: boolean;
+}> = (props) => {
   const [enteredIngredients, setEnteredIngredients] = useState([
     ...props.recipe.ingredients,
     "",
@@ -14,14 +20,14 @@ const EditRecipe = (props) => {
   ]);
   const [enteredName, setEnteredName] = useState(props.recipe.name);
   const [selectedImage, setSelectedImage] = useState(props.recipe.image);
-  const [error, setError] = useState();
+  const [error, setError] = useState<{ message: string } | null>();
 
-  const nameChangeHandler = (event) => {
+  const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setEnteredName(event.target.value);
   };
 
-  const imageUploadHandler = (event) => {
-    const file = event.target.files[0];
+  const imageUploadHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
       if (!file.type.startsWith("image/")) {
         event.target.value = "";
@@ -47,13 +53,15 @@ const EditRecipe = (props) => {
     }
 
     setError(null);
-    props.onDone({
-      name: enteredName,
-      ingredients: enteredIngredients.slice(0, -1),
-      instructions: enteredInstructions.slice(0, -1),
-      image: selectedImage,
-      id: props.id,
-    });
+
+    const updatedRecipe = new Recipe(
+      enteredName,
+      enteredIngredients.slice(0, -1),
+      enteredInstructions.slice(0, -1),
+      selectedImage,
+      props.id
+    );
+    props.onDone(updatedRecipe);
   };
 
   return (

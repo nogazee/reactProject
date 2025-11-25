@@ -4,11 +4,11 @@ import Button from "./Button";
 import Card from "./Card";
 import classes from "./ErrorModal.module.css";
 
-const Backdrop = (props) => {
+const Backdrop: React.FC<{onConfirm: () => void}> = (props) => {
   return <div className={classes.backdrop} onClick={props.onConfirm} />;
 }
 
-const ModalOverlay = (props) => {
+const ModalOverlay: React.FC<{title: string, message: string, onConfirm: () => void}> = (props) => {
   return (
     <Card className={classes.modal}>
       <header className={classes.header}>
@@ -24,11 +24,11 @@ const ModalOverlay = (props) => {
   );
 }
 
-const portalElement = document.getElementById("overlays");
+const portalElement: HTMLElement = document.getElementById("overlays")!;
 
-const ErrorModal = (props) => {
+const ErrorModal: React.FC<{title: string, message: string, onConfirm: () => void}> = (props) => {
   return <Fragment>
-    {ReactDOM.createPortal(<Backdrop onClick={props.onClick} />, portalElement)}
+    {ReactDOM.createPortal(<Backdrop onConfirm={props.onConfirm} />, portalElement)}
     {ReactDOM.createPortal(<ModalOverlay {...props} />, portalElement)}
   </Fragment>
 };
